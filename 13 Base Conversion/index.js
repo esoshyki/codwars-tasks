@@ -24,4 +24,4 @@ function convert(input, source, target) {
 }
 
 
-console.log(convert("15121215", 16))
+console.log(convert("97", 16))
