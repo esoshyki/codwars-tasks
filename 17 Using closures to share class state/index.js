@@ -1,17 +1,30 @@
-var Cat = (function (name, weight) {
-    var sumWeight = 0;
-    var count = 0
-    var cat = {}
-    cat.name = name;
-    cat.weight = weight;
-    cat.averageWeight = function () {
-        sumWeight += cat.weight;
+    var Cat = (function () {
+    var sum = 0;
+    var count = 0; 
+    var avg = 0;
+    function a(name, weight) {
+        if (!name || !weight) {
+            throw ('error')
+        }
+        this.name = name;
+        this.weight = weight;
+        sum += weight;
         count += 1;
-        return sumWeight / count
+        avg = sum / count
+        Object.defineProperty(this, "weight",{
+            set(newweight) { sum -= weight; this._weight = newweight; sum += this._weight; avg = sum / count},
+            get() { return this._weight }        
+        });  
+        
     }
-    return cat;
-    }
-);
+    Object.defineProperty(a, "averageWeight",{
+        writable: true,
+        enumerable: true,
+        value: () => avg
+    });
 
-var fluffy = new Cat('fluffy', 15);
-console.log(fluffy instanceof Cat == true)
+    return a;
+   }());
+
+   fluffy = new Cat('fluffy', 15);
+   garfield = new Cat('garfield', 25);
