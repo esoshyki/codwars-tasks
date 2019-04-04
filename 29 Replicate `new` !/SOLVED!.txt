@@ -1,0 +1,20 @@
+My solution
+
+function nouveau(Constructor, ...args) {
+    if (typeof Reflect !== 'undefined') {
+      return Reflect.construct(Constructor, args)
+    }
+  
+    const obj = Object.create(Constructor.prototype);
+    const result = Constructor.apply(obj, args);
+  
+    return result === Object(result) ? result : obj;
+  }
+
+Best solution
+
+function nouveau (Constructor, ...args) {
+  const instance = Object.create(Constructor.prototype);
+  const result = Constructor.apply(instance, args);
+  return result === Object(result) ? result : instance;
+}
